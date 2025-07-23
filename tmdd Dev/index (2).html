@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour être un bon dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .progress-bar {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .active-tab {
+            border-bottom: 3px solid #3b82f6;
+            font-weight: 600;
+        }
+        .quiz-option:hover {
+            background-color: #f3f4f6;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-laptop-code text-3xl mr-3"></i>
+                    <h1 class="text-2xl font-bold">Pour être un bon dev</h1>
+                </div>
+                <nav class="flex space-x-1 md:space-x-4">
+                    <button id="homeBtn" class="px-3 py-2 rounded-lg hover:bg-blue-700 active-tab">Accueil</button>
+                    <button id="coursesBtn" class="px-3 py-2 rounded-lg hover:bg-blue-700">Cours</button>
+                    <button id="exercisesBtn" class="px-3 py-2 rounded-lg hover:bg-blue-700">Exercices</button>
+                    <button id="quizBtn" class="px-3 py-2 rounded-lg hover:bg-blue-700">Quiz</button>
+                    <button id="profileBtn" class="px-3 py-2 rounded-lg hover:bg-blue-700">Profil</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Home Section -->
+        <section id="homeSection">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Bienvenue sur "Pour être un bon dev"</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Votre plateforme complète pour apprendre l'informatique de A à Z. 
+                    Des cours structurés, des exercices pratiques et des quiz pour tester vos connaissances.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-graduation-cap text-blue-500 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-semibold">Cours Complets</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Accédez à des cours détaillés en algorithmique, programmation, web et réseaux, 
+                        adaptés à chaque niveau universitaire.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-pen-fancy text-green-500 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-semibold">Exercices Pratiques</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Mettez en pratique vos connaissances avec des exercices corrigés 
+                        pour chaque concept abordé dans les cours.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-question-circle text-purple-500 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-semibold">Quiz Évaluatifs</h3>
+                    </div>
+                    <p class="text-gray-600">
+                        Testez votre compréhension avec des quiz interactifs et recevez 
+                        des feedbacks immédiats sur vos réponses.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-xl font-semibold mb-4">Dernières actualités</h3>
+                <div class="space-y-4">
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-blue-600">Nouveau cours disponible</h4>
+                        <p class="text-gray-600">Le cours de Python avancé (L3) est maintenant en ligne avec des exercices pratiques.</p>
+                        <span class="text-sm text-gray-400">Publié le 15/06/2023</span>
+                    </div>
+                    <div class="border-b pb-4">
+                        <h4 class="font-medium text-blue-600">Concours de programmation</h4>
+                        <p class="text-gray-600">Participez à notre concours mensuel de résolution de problèmes algorithmiques.</p>
+                        <span class="text-sm text-gray-400">Publié le 10/06/2023</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="coursesSection" class="hidden">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Tous les cours</h2>
+                <div class="flex space-x-2">
+                    <select id="levelFilter" class="px-3 py-2 border rounded-lg">
+                        <option value="all">Tous les niveaux</option>
+                        <option value="L1">Licence 1</option>
+                        <option value="L2">Licence 2</option>
+                        <option value="L3">Licence 3</option>
+                    </select>
+                    <select id="categoryFilter" class="px-3 py-2 border rounded-lg">
+                        <option value="all">Toutes catégories</option>
+                        <option value="algorithmique">Algorithmique</option>
+                        <option value="programmation">Programmation</option>
+                        <option value="web">Développement Web</option>
+                        <option value="reseaux">Réseaux</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Algorithmique L1 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L1" data-category="algorithmique">
+                    <div class="bg-blue-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">L1</span>
+                            <span class="text-sm text-gray-600">12 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Introduction à l'algorithmique</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Apprenez les bases de l'algorithmique: variables, structures de contrôle, complexité.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">30%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-200">
+                            Continuer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- HTML/CSS L1 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L1" data-category="web">
+                    <div class="bg-green-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">L1</span>
+                            <span class="text-sm text-gray-600">8 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Fondamentaux du Web: HTML & CSS</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Maîtrisez les bases du développement web avec HTML5 et CSS3.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">65%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition duration-200">
+                            Continuer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Python L1 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L1" data-category="programmation">
+                    <div class="bg-yellow-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">L1</span>
+                            <span class="text-sm text-gray-600">10 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Initiation à Python</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Découvrez la programmation avec Python: syntaxe, structures de données, fonctions.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">45%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg transition duration-200">
+                            Continuer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- JavaScript L2 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L2" data-category="web">
+                    <div class="bg-purple-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-purple-500 text-white text-xs px-2 py-1 rounded">L2</span>
+                            <span class="text-sm text-gray-600">15 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">JavaScript Moderne</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Approfondissez JavaScript: ES6+, DOM, asynchrone, programmation orientée objet.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">20%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg transition duration-200">
+                            Commencer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Algorithmique avancée L2 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L2" data-category="algorithmique">
+                    <div class="bg-blue-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded">L2</span>
+                            <span class="text-sm text-gray-600">18 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Algorithmique Avancée</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Structures de données complexes, algorithmes de tri, graphes et parcours.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 10%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">10%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-200">
+                            Commencer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Réseaux L2 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L2" data-category="reseaux">
+                    <div class="bg-red-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">L2</span>
+                            <span class="text-sm text-gray-600">14 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Fondamentaux des Réseaux</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Modèle OSI, TCP/IP, adressage IP, protocoles réseaux et outils de diagnostic.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 5%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">5%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-200">
+                            Commencer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Python avancé L3 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L3" data-category="programmation">
+                    <div class="bg-yellow-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">L3</span>
+                            <span class="text-sm text-gray-600">20 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Python Avancé</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Programmation orientée objet, décorateurs, générateurs, manipulation de fichiers.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">0%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg transition duration-200">
+                            Démarrer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Framework Web L3 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L3" data-category="web">
+                    <div class="bg-green-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-green-500 text-white text-xs px-2 py-1 rounded">L3</span>
+                            <span class="text-sm text-gray-600">16 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Frameworks Frontend</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Découverte de React.js et Vue.js pour le développement d'applications web modernes.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">0%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition duration-200">
+                            Démarrer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sécurité réseaux L3 -->
+                <div class="course-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300" data-level="L3" data-category="reseaux">
+                    <div class="bg-red-100 p-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">L3</span>
+                            <span class="text-sm text-gray-600">12 leçons</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Sécurité des Réseaux</h3>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 mb-4">Cryptographie, VPN, pare-feux, détection d'intrusion et bonnes pratiques de sécurité.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="w-full mr-2">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <span class="text-sm text-gray-600">0%</span>
+                        </div>
+                        <button class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-200">
+                            Démarrer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercises Section -->
+        <section id="exercisesSection" class="hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8">Exercices pratiques</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-filter text-blue-500 mr-3"></i>
+                        <select class="px-3 py-2 border rounded-lg w-full">
+                            <option>Tous les domaines</option>
+                            <option>Algorithmique</option>
+                            <option>Programmation</option>
+                            <option>Développement Web</option>
+                            <option>Réseaux</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-sort-amount-down text-blue-500 mr-3"></i>
+                        <select class="px-3 py-2 border rounded-lg w-full">
+                            <option>Trier par difficulté</option>
+                            <option>Facile</option>
+                            <option>Moyen</option>
+                            <option>Difficile</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Votre progression</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Algorithmique</span>
+                                <span class="text-sm font-medium">45%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Programmation</span>
+                                <span class="text-sm font-medium">60%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Développement Web</span>
+                                <span class="text-sm font-medium">30%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Exercice 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Algorithmique</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded ml-2">L1</span>
+                        </div>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Facile</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Tri d'un tableau</h3>
+                    <p class="text-gray-600 mb-4">
+                        Écrivez un algorithme qui trie un tableau d'entiers dans l'ordre croissant en utilisant le tri à bulles.
+                        Votre algorithme doit prendre en entrée un tableau et retourner le tableau trié.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 15 min</span>
+                            <span class="text-sm text-gray-500"><i class="fas fa-users mr-1"></i> 85% réussite</span>
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                            Résoudre
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exercice 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">JavaScript</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded ml-2">L2</span>
+                        </div>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Moyen</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Manipulation du DOM</h3>
+                    <p class="text-gray-600 mb-4">
+                        Créez une fonction JavaScript qui ajoute dynamiquement des éléments à une liste (<ul>) 
+                        en fonction des données d'un tableau. La fonction doit aussi permettre de supprimer un élément 
+                        au clic sur celui-ci.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 25 min</span>
+                            <span class="text-sm text-gray-500"><i class="fas fa-users mr-1"></i> 65% réussite</span>
+                        </div>
+                        <button class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                            Résoudre
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exercice 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Réseaux</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-2">L3</span>
+                        </div>
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Difficile</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Configuration d'un routeur</h3>
+                    <p class="text-gray-600 mb-4">
+                        Configurez un routeur Cisco pour permettre la communication entre deux sous-réseaux différents.
+                        Vous devez configurer les interfaces, le routage statique et vérifier la connectivité.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 45 min</span>
+                            <span class="text-sm text-gray-500"><i class="fas fa-users mr-1"></i> 40% réussite</span>
+                        </div>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                            Résoudre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quizSection" class="hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Testez vos connaissances</h2>
+                <p class="text-gray-600">Choisissez un quiz pour évaluer votre maîtrise des concepts clés.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sort-numeric-down text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Algorithmique</h3>
+                    <p class="text-gray-600 mb-4 text-sm">5 quiz disponibles</p>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                        Voir les quiz
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-code text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Programmation</h3>
+                    <p class="text-gray-600 mb-4 text-sm">8 quiz disponibles</p>
+                    <button class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                        Voir les quiz
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-globe text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Développement Web</h3>
+                    <p class="text-gray-600 mb-4 text-sm">6 quiz disponibles</p>
+                    <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                        Voir les quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz en cours -->
+            <div id="activeQuiz" class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Quiz: Algorithmique de base (L1)</h3>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium">Progression</span>
+                        <span class="text-sm font-medium">2/5 questions</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                </div>
+
+                <div id="quizQuestion">
+                    <p class="text-lg font-medium mb-6">Question 3: Quelle est la complexité temporelle de l'algorithme de tri à bulles dans le pire des cas?</p>
+                    
+                    <div class="space-y-3">
+                        <div class="quiz-option p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" id="option1" name="quizOption" class="mr-3">
+                            <label for="option1">O(n)</label>
+                        </div>
+                        <div class="quiz-option p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" id="option2" name="quizOption" class="mr-3">
+                            <label for="option2">O(n log n)</label>
+                        </div>
+                        <div class="quiz-option p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" id="option3" name="quizOption" class="mr-3">
+                            <label for="option3">O(n²)</label>
+                        </div>
+                        <div class="quiz-option p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" id="option4" name="quizOption" class="mr-3">
+                            <label for="option4">O(log n)</label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button class="text-blue-500 hover:text-blue-700 font-medium">
+                            <i class="fas fa-arrow-left mr-2"></i>Question précédente
+                        </button>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition duration-200">
+                            Valider et continuer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profileSection" class="hidden">
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-semibold">TMDD</h3>
+                        <p class="text-gray-600 mb-4">Développeur Fullstack</p>
+                        <div class="flex justify-center space-x-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">12</div>
+                                <div class="text-sm text-gray-500">Cours suivis</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">47</div>
+                                <div class="text-sm text-gray-500">Exercices</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold">8</div>
+                                <div class="text-sm text-gray-500">Quiz</div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 rounded-lg transition duration-200">
+                            Modifier le profil
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="md:w-2/3">
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-semibold mb-4">Progression générale</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Algorithmique</span>
+                                    <span class="font-medium">45%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Programmation</span>
+                                    <span class="font-medium">60%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Développement Web</span>
+                                    <span class="font-medium">30%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Réseaux</span>
+                                    <span class="font-medium">15%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 15%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Dernières activités</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 p-2 rounded-full mr-4">
+                                    <i class="fas fa-book text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Cours "Algorithmique Avancée"</h4>
+                                    <p class="text-gray-600 text-sm">Leçon 5: Algorithmes de graphes</p>
+                                    <span class="text-xs text-gray-400">Il y a 2 heures</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-4">
+                                    <i class="fas fa-check text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Exercice "Manipulation du DOM"</h4>
+                                    <p class="text-gray-600 text-sm">Résolu avec succès</p>
+                                    <span class="text-xs text-gray-400">Hier, 18:32</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-purple-100 p-2 rounded-full mr-4">
+                                    <i class="fas fa-question text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Quiz "JavaScript Moderne"</h4>
+                                    <p class="text-gray-600 text-sm">Score: 7/10</p>
+                                    <span class="text-xs text-gray-400">Hier, 15:10</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 p-2 rounded-full mr-4">
+                                    <i class="fas fa-book text-yellow-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">Cours "Python Avancé"</h4>
+                                    <p class="text-gray-600 text-sm">Leçon 3: Programmation orientée objet</p>
+                                    <span class="text-xs text-gray-400">23/06/2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Pour être un bon dev</h3>
+                    <p class="text-gray-400">
+                        La plateforme d'apprentissage complète pour les étudiants en informatique.
+                        Cours, exercices et quiz pour tous les niveaux.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Accueil</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cours</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Exercices</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Quiz</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Ressources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Licence 1</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Licence 2</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Licence 3</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-gray-400"></i> <a href="mailto:tmdd78@gmail.com" class="text-gray-400 hover:text-white transition">tmdd78@gmail.com</a></li>
+                        <li class="flex items-center"><i class="fas fa-phone mr-2 text-gray-400"></i> <span class="text-gray-400">+221 78 14 15 300</span></li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> <span class="text-gray-400">Dakar, Sénégal</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 Pour être un bon dev. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation between sections
+        document.getElementById('homeBtn').addEventListener('click', function() {
+            showSection('homeSection');
+            setActiveTab(this);
+        });
+        
+        document.getElementById('coursesBtn').addEventListener('click', function() {
+            showSection('coursesSection');
+            setActiveTab(this);
+        });
+        
+        document.getElementById('exercisesBtn').addEventListener('click', function() {
+            showSection('exercisesSection');
+            setActiveTab(this);
+        });
+        
+        document.getElementById('quizBtn').addEventListener('click', function() {
+            showSection('quizSection');
+            setActiveTab(this);
+        });
+        
+        document.getElementById('profileBtn').addEventListener('click', function() {
+            showSection('profileSection');
+            setActiveTab(this);
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('main section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function setActiveTab(button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('header nav button').forEach(btn => {
+                btn.classList.remove('active-tab');
+            });
+            
+            // Add active class to clicked button
+            button.classList.add('active-tab');
+        }
+
+        // Filter courses
+        document.getElementById('levelFilter').addEventListener('change', filterCourses);
+        document.getElementById('categoryFilter').addEventListener('change', filterCourses);
+
+        function filterCourses() {
+            const level = document.getElementById('levelFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            
+            document.querySelectorAll('.course-card').forEach(card => {
+                const cardLevel = card.getAttribute('data-level');
+                const cardCategory = card.getAttribute('data-category');
+                
+                const levelMatch = (level === 'all') || (cardLevel === level);
+                const categoryMatch = (category === 'all') || (cardCategory === category);
+                
+                if (levelMatch && categoryMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Quiz option selection
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('bg-blue-100', 'border-blue-300');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('bg-blue-100', 'border-blue-300');
+                this.querySelector('input').checked = true;
+            });
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=tmdd/tmdddev" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
